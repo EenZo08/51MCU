@@ -39,27 +39,15 @@
 #### 1. 编译C源文件
 对每个`.c`源文件进行编译，生成`.rel`目标文件。
 
-```bash
-E:\SoftWare\SDCC\bin\sdcc.exe -c --std-c99 -Iinc -mmcs51 --opt-code-speed --iram-size 256 --xram-size 0 --code-size 8192 -o build/Debug/.obj/src/main.rel src/main.c
-E:\SoftWare\SDCC\bin\sdcc.exe -c --std-c99 -Iinc -mmcs51 --opt-code-speed --iram-size 256 --xram-size 0 --code-size 8192 -o build/Debug/.obj/src/LCD1602.rel src/LCD1602.c
-E:\SoftWare\SDCC\bin\sdcc.exe -c --std-c99 -Iinc -mmcs51 --opt-code-speed --iram-size 256 --xram-size 0 --code-size 8192 -o build/Debug/.obj/src/Delay.rel src/Delay.c
-E:\SoftWare\SDCC\bin\sdcc.exe -c --std-c99 -Iinc -mmcs51 --opt-code-speed --iram-size 256 --xram-size 0 --code-size 8192 -o build/Debug/.obj/src/Timer0.rel src/Timer0.c
-```
 **注意**: 请确保 `build/Debug/.obj/src/` 目录存在。
 
 #### 2. 链接目标文件
 将所有`.rel`目标文件链接成一个`.ihx`可执行文件。
 
-```bash
-E:\SoftWare\SDCC\bin\sdcc.exe --iram-size 256 --xram-size 0 --code-size 8192 --out-fmt-ihx build/Debug/.obj/src/main.rel build/Debug/.obj/src/LCD1602.rel build/Debug/.obj/src/Delay.rel build/Debug/.obj/src/Timer0.rel -o build/Debug/89c52_sdcc_demo.ihx
-```
 
 #### 3. 转换为HEX文件
 使用 `packihx` 工具将`.ihx`文件转换为`.hex`文件，用于烧录到单片机。
 
-```bash
-E:\SoftWare\SDCC\bin\packihx.exe build/Debug/89c52_sdcc_demo.ihx > build/Debug/89c52_sdcc_demo.hex
-```
 
 ## SDCC 兼容性注意事项
 
