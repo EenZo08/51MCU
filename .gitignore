@@ -13,3 +13,9 @@
 # eide template
 *.ept
 *.eide-template
+
+# IDE and formatting tools
+/clangd
+/clangd-format
+/.gitignore
+/mcs51_sdcc-quickstart.code-workspace
