@@ -1,0 +1,9 @@
+#include "delay.h"
+
+void Delay1ms(unsigned int ms) //@12.000MHz
+{
+  unsigned int i, j;
+  for (i = 0; i < ms; i++)
+    for (j = 0; j < 120; j++)
+      ;
+}
