@@ -73,8 +73,12 @@ unsigned char DS1302_ReadByte(unsigned char byte) {
   unsigned char date = 0x00;
   // 默认是读取模式
   DS1302_CE = 1; // 先通
+  // 输入配置 byte为读取模式  最后一位为1 0000 0001    读就是 1000 0000
   byte |= 1;
   // 读第一位
+
+  
+  
 
   for (i = 0; i < 8; i++) {
     DS1302_IO = byte & (0x01 << i); // 第一位

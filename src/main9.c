@@ -4,7 +4,7 @@
 
 
 
-//设置时间 DS1302
+//显示时间 DS1302    
 unsigned char x;
 
 void main(){
@@ -25,7 +25,7 @@ void main(){
         DS1302_ReadTime();
 
         // LCD_ShowNum(1,1,1,2);
-        LCD_ShowNum(1,1,DS1302_Time[0],2);//显示年
+        // LCD_ShowNum(1,1,DS1302_Time[0],2);//显示年
         LCD_ShowNum(1,1,DS1302_Time[0],2);//显示年
 		LCD_ShowNum(1,4,DS1302_Time[1],2);//显示月
 		LCD_ShowNum(1,7,DS1302_Time[2],2);//显示日
