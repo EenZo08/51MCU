@@ -1,5 +1,6 @@
 #include "I2C.h"
 #include <reg52.h>
+#include "AT2402.h"
 // #include<stdint.h>
 
 //配置 EEPROM  AT2402 的存储 读取配置
@@ -8,11 +9,11 @@
 
 
 /*
-@brief 写入字节
+@brief 写入字节                                            要延时5ms 
 @param addr 数据地址
 @param byte 具体数据
 */
-//写入字节   相对于主机是接受数据    主机要发送应答给从机
+//写入字节  要延时5ms  相对于主机是接受数据    主机要发送应答给从机        
 void AT2402_WriteByte(unsigned char addr, unsigned char byte) {
   I2C_Start();
   I2C_SendByte(AT2402_ADDR);//设备地址

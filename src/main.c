@@ -1,108 +1,87 @@
-#include "AT2402.h"
-#include "Delay.h"
-#include "Key4.h"
-// #include "LCD1602.h"
 #include "Timer0.h"
 #include "delay.h"
 #include "digital.h"
 #include <reg52.h>
 
+// PWM模型实现  电机转速
 
-// 定时器扫描   4按键  数码管  +存储AT2402模块
+// SDCC 启动钩子函数，在 main() 之前执行
+unsigned char _sdcc_external_startup(void) {
+  P10 = 0;  // 第一时间拉低电机引脚
+  return 0; // 返回 0 让 SDCC 继续完成全局/静态变量初始化
+}
 
-unsigned char num;
-unsigned char Min, Sec, MiniSec;
+// 计数值和比较值
+unsigned char Counter = 0;
+unsigned char Compare = 0;
 
-unsigned char Runflag;
+unsigned char Speed = 0;
 
 void main() {
-//   LCD_Init();
+
+  P10 = 0;
+  P10 = 0;
+  //   Delay1ms(10);
+
   Timer0_Init();
-  unsigned char key = 0;
+
   while (1) {
-    key = Key4();
-    if (key == 1) { // 切换模式
-      Runflag = !Runflag;
-    //   if (Runflag) {
-    //     LCD_ShowString(1, 1, "Run ");
-    //   } else {
-    //     LCD_ShowString(1, 1, "Stop");
-    //   }
-    }
+    if (P31 == 0) {
+      Delay1ms(20);
+      while (P31 == 0)
+        ;
+      Delay1ms(20);
 
-    if (key == 2) { // 数码管清零
-      Min = Sec = MiniSec = 0;
-    }
+      Speed++;
+      if (Speed > 3) {
+        Speed = 0;
+      }
 
-    if (key == 3) { // 第三个按键存储 写入
-      AT2402_WriteByte(0, Min);
-      Delay1ms(5);
-      AT2402_WriteByte(1, Sec);
-      Delay1ms(5);
-      AT2402_WriteByte(2, MiniSec);
-      Delay1ms(5);
-    }
+      //   switch (Speed) {
+      //   case 0:
+      //     Compare = 0;
+      //     break;
+      //   case 1:
+      //     Compare = 33;
+      //     break;
+      //   case 2:
+      //     Compare = 66;
+      //     break;
+      //   case 3:
+      //     Compare = 100;
+      //     break;
+      //   }
 
-    if (key == 4) { // 第四个按键num读取  从0地址开始读取2字节
-      // 读取num的低位
-      Min = AT2402_ReadByte(0);
-
-      Sec = AT2402_ReadByte(1);
-
-      MiniSec = AT2402_ReadByte(2);
-    }
-
-    // 把数码管的缓存数组更改
-    Digital_Set(1, Min / 10);
-    Digital_Set(2, Min % 10);
-    Digital_Set(3, 11); // 显示 -
-    Digital_Set(4, Sec / 10);
-    Digital_Set(5, Sec % 10);
-    Digital_Set(6, 11); // 显示 -
-    Digital_Set(7, MiniSec / 10);
-    Digital_Set(8, MiniSec % 10);
-  }
-}
-
-void Sec_loop() { // 时间
-  if (Runflag) {
-    MiniSec++;
-    if (MiniSec >= 100) {
-      MiniSec = 0;
-      Sec++;
-      if (Sec >= 60) {
-        Sec = 0;
-        Min++;
-        if (Min >= 60) {
-          Min = 0;
-        }
+      if (Speed == 0) {
+        Compare = 0;
+      } else if (Speed == 1) {
+        Compare = 50;
+      } else if (Speed == 2) {
+        Compare = 75;
+      } else if (Speed == 3) {
+        Compare = 100;
       }
     }
+    Digital(1, Speed);
   }
 }
 
-// 中断函数  支线  但还是会改变全局变量   单位是1毫秒  TF0/计数器计数溢出执行
+// // // 中断函数  支线  但还是会改变全局变量   单位是1毫秒
+// TF0/计数器计数溢出执行
 void Timer0_Routine() __interrupt(1) {
   // 静态变量
-  static unsigned int time0, time1, time2;
+  //   static unsigned int time = 0;
   // 重置
   TH0 = 0XFC; // 高位
   TL0 = 0X67; // 地位
-  time0++;
-  if (time0 >= 20) { // 20ms扫描按键
-    time0 = 0;
-    Key4_Loop();
-  }
+  // time++;
+  Counter++;
+  if (Counter >= 100)
+    Counter = 0; // 周期是100   超过100置0重新开始
 
-  time1++;
-  if (time1 >= 2) { // 扫描数码管
-    time1 = 0;
-    Digital_Loop();
-  }
-
-  time2++;
-  if (time2 >= 10) {
-    time2 = 0;
-    Sec_loop();
+  if (Counter < Compare) { // 比较计数值和比较值    决定引脚的电压是1/0
+    P10 = 1;
+  } else {
+    P10 = 0;
   }
 }

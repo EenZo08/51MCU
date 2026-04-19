@@ -13,5 +13,6 @@ void LCD_ShowHexNum(unsigned char Line, unsigned char Column,
                     unsigned int Number, unsigned char Length);
 void LCD_ShowBinNum(unsigned char Line, unsigned char Column,
                     unsigned int Number, unsigned char Length);
+void LCD_WriteCommand(unsigned char Command);
 
 #endif
