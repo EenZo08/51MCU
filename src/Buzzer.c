@@ -12,8 +12,6 @@ void Delay500us(void) //@11.0592MHz
   while (--i)
     ;
 }
-
-uint8_t state = 0;
 void main() {
 
   while (1) {
