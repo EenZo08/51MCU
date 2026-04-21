@@ -1,21 +1,37 @@
-# dot files
-/.vscode/launch.json
-/.settings
-/.eide/log
-/.eide.usr.ctx.json
+# EIDE 插件配置（包含本地绝对路径，不要上传）
+.eide/
 
-# project out
-/build
-/bin
-/obj
-/out
+# VS Code 个人配置
+.vscode/
 
-# eide template
-*.ept
-*.eide-template
+# 编译输出目录
+build/
+Debug/
+Release/
 
-# IDE and formatting tools
-/.clangd
-/.clangd-format
-/.gitignore
-/mcs51_sdcc-quickstart.code-workspace
+# SDCC 编译中间文件
+*.asm
+*.cdb
+*.ihx
+*.lk
+*.lst
+*.map
+*.mem
+*.omf
+*.rel
+*.rst
+*.sym
+
+# 最终烧录文件（可选忽略，如果需要保留预编译固件则注释掉）
+*.hex
+*.bin
+
+# 编辑器临时文件
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 工作区文件（个人偏好）
+*.code-workspace
