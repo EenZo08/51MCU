@@ -2,6 +2,8 @@
 #include "delay.h"
 #include <reg52.h>
 
+//lcd 轮播
+
 
 void main() {
 
