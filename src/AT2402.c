@@ -33,7 +33,7 @@ void AT2402_WriteByte(unsigned char addr, unsigned char byte) {
 
 
 //读取字节   相对于主机是发送数据    主机要接收应答从机
-unsigned char AT2402_ReadByte(uint8_t addr) {
+unsigned char AT2402_ReadByte(unsigned char addr) {
   unsigned char byte;
   I2C_Start();
   I2C_SendByte(AT2402_ADDR);//设备地址
