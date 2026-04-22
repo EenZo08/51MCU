@@ -35,3 +35,6 @@ Thumbs.db
 
 # 工作区文件（个人偏好）
 *.code-workspace
+
+*.clangd
+*.clangd-format
