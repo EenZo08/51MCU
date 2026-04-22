@@ -133,3 +133,25 @@ void Digital_Loop() {
   i++;
   if (i >= 9)i = 1;//显示数组的原因
 }
+
+
+// 显示两位数字（00~99）
+void Digital_SetNum(unsigned char num) {
+    Digital_Set(1, num / 10);
+    Digital_Set(2, num % 10);
+    Digital_Set(3, 0xFF);  // 后6位不显示
+    // ... 其余位熄灭
+}
+
+// 显示温度（XX.X 格式，如 25.5）
+void Digital_SetTemp(unsigned int temp_x10) {
+    Digital_Set(1, temp_x10 / 100);        // 十位
+    Digital_Set(2, (temp_x10 / 10) % 10);  // 个位
+    Digital_Set(3, temp_x10 % 10);         // 小数位（带小数点）
+    // 其余位熄灭
+}
+
+// 全部消隐（用于闪烁）
+void Digital_SetBlank(void) {
+    for(int i=0; i<8; i++) Digital_Set(i, 0xFF);
+}

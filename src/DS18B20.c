@@ -1,7 +1,6 @@
+#include "DS18B20.h"
 #include "OneWire.h"
 #include <reg52.h>
-#include "DS18B20.h"
-
 
 // 定义DS18B20指令
 #define DS18B20_SKIP_ROM 0xCC
@@ -9,7 +8,7 @@
 #define DS18B20_READ_SCRATCHPAD 0xBE
 
 // 开始温度变换
-void DS180B20_ConvertT(void) {
+void DS18B20_ConvertT(void) {
   OneWire_Init();
   OneWire_SendByte(DS18B20_SKIP_ROM);
   OneWire_SendByte(DS18B20_CONVERT_T);

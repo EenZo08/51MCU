@@ -1,6 +1,9 @@
 #include "Key4.h"
 #include "Delay.h"
 #include <reg52.h>
+#include "IR.h"
+
+
 
 unsigned char Key;
 // 4按键模块   返回按键值  1~4
@@ -87,4 +90,7 @@ void Key4_Loop() {
   if (LastState == 4 && CurState == 0) {
     Key = 4;
   }
+
+
+
 }

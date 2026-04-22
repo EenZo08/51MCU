@@ -7,7 +7,7 @@ unsigned char Num;
 unsigned char Address;
 unsigned char Command;
 
-//红外遥控接收      lcd显示
+//红外遥控接收      lcd显示    外部中断接收数据   定时器1计数 测量脉冲宽度  只计数没触发中断
 
 
 void main()

@@ -1,4 +1,3 @@
-#!D:\Python\python.exe
 #coding=utf-8
 # stcflash  Copyright (C) 2013  laborer (laborer@126.com)
 
